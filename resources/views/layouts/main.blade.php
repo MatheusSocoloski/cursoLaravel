@@ -34,21 +34,39 @@
                     <li class="nav.item">
                         <a href="/events/create" class="nav-link">Criar Eventos</a>
                     </li>
+                    @auth
                     <li class="nav.item">
-                        <a href="/" class="nav-link">Entrar</a>
+                        <a href="/dashboard" class="nav-link">Meus Eventos</a>
                     </li>
                     <li class="nav.item">
-                        <a href="/" class="nav-link">Cadastrar</a>
+                    <form action="/logout" method="POST">
+                        @csrf
+                        <a href="/logout" class="nav-link" onclick="event.preventDefault(); this.closest('form').submit();">Sair</a>
+                    </form>    
                     </li>
-
+                    @endauth
+                    @guest
                     <li class="nav.item">
-                        <a href="/produto_teste" class="nav-link">Produto teste</a>
+                        <a href="/login" class="nav-link">Entrar</a>
                     </li>
+                    <li class="nav.item">
+                        <a href="/register" class="nav-link">Cadastrar</a>
+                    </li>
+                    @endguest
                 </ul>
                 </div>
             </nav>
         </head>
-    @yield('content')
+    <main>
+        <div class="container-fluid">
+            <div class="row">
+                @if(session('msg'))
+                  <p class="msg">{{ session('msg')}}</p>
+                @endif
+                @yield('content') 
+            </div>
+        </div>
+    </main>
     <footer>
         <p>HDC Events &copy; 2023</p>
     </footer>
